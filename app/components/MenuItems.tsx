@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {useState} from 'react';
 
-import {FlatList, SectionList, StyleSheet, Text, View} from "react-native";
+import {FlatList, SectionList, StyleSheet, Text, View, Pressable, ImageBackground} from "react-native";
 
 const green = '#495E57';
 const yellow = '#F4CE14';
@@ -85,7 +85,7 @@ const Item = ({name, price}) => {
 };
 
 const MenuItems = () => {
-
+    const [showMenu, setShowMenu] = useState(false);
     // @ts-ignore
     const renderItem = ({item}) => <Item name={item.name} price={item.price} />;
 
@@ -96,22 +96,52 @@ const MenuItems = () => {
 
     return (
      <View style={menuStyle.container}>
-         {/*<FlatList*/}
-         {/*    data={menuItems}*/}
-         {/*    keyExtractor={item => item.id}*/}
-         {/*    renderItem={renderItem}*/}
-         {/*    ItemSeparatorComponent={Separator}*/}
-         {/*    ListHeaderComponent={Header}*/}
-         {/*    ListFooterComponent={Footer}*/}
-         {/*/>*/}
-         <SectionList
-             sections={sectionMenuItems}
-             renderItem={renderItem}
-             keyExtractor={(item, index) => item.name + index}
-             renderSectionHeader={renderSectionHeader}
-             ItemSeparatorComponent={Separator}
-             ListFooterComponent={Footer}
-         />
+         <ImageBackground
+             style={menuStyle.backgroundImage}
+             source={require('../img/background.png')}
+             resizeMode={'contain'}>
+             {
+                 !showMenu && (
+                     <Text style={menuStyle.infoSection}>
+                         Little Lemon is a charming neighborhood bistro that serves simple food
+                         and classic cocktails in a lively but casual environment. View our
+                         menu to explore our cuisine with daily specials!
+                     </Text>
+                 )
+             }
+
+             <Pressable style={menuStyle.button}
+                        onPress={() => {setShowMenu(!showMenu);}}>
+                 <Text style={menuStyle.buttonText}>
+                     {showMenu ? 'Home' : 'View Menu'}
+                 </Text>
+             </Pressable>
+
+             {
+                 showMenu && (
+                     <SectionList
+                         sections={sectionMenuItems}
+                         renderItem={renderItem}
+                         keyExtractor={(item, index) => item.name + index}
+                         renderSectionHeader={renderSectionHeader}
+                         ItemSeparatorComponent={Separator}
+                         ListFooterComponent={Footer}
+                     />
+                 )
+             }
+             {/*{*/}
+             {/*    showMenu && (*/}
+             {/*        <FlatList*/}
+             {/*            data={menuItems}*/}
+             {/*            keyExtractor={item => item.id}*/}
+             {/*            renderItem={renderItem}*/}
+             {/*            ItemSeparatorComponent={Separator}*/}
+             {/*            ListHeaderComponent={Header}*/}
+             {/*            ListFooterComponent={Footer}*/}
+             {/*        />*/}
+             {/*    )*/}
+             {/*}*/}
+         </ImageBackground>
      </View>
     )
 };
@@ -121,6 +151,10 @@ export default MenuItems;
 const menuStyle = StyleSheet.create({
     container: {
         flex: 0.8
+    },
+    backgroundImage: {
+        flex: 1,
+        justifyContent: 'center'
     },
     itemContainer: {
         flexDirection: 'row',
@@ -133,10 +167,10 @@ const menuStyle = StyleSheet.create({
         backgroundColor: green
     },
     headerText: {
-        fontSize: 40, flexWrap: 'wrap', color: 'white', textAlign: 'center'
+        fontSize: 40, flexWrap: 'wrap', color: 'black', textAlign: 'center'
     },
     itemText: {
-        fontSize: 30, flexWrap: 'wrap', color: yellow
+        fontSize: 30, flexWrap: 'wrap', color: 'black'
     },
     separator: {
         borderBottomWidth: 1,
@@ -144,5 +178,28 @@ const menuStyle = StyleSheet.create({
     },
     footerText: {
         textAlign: 'center'
-    }
+    },
+    button: {
+        fontSize: 22,
+        padding: 10,
+        marginVertical: 8,
+        margin: 40,
+        backgroundColor: '#EDEFEE',
+        borderColor: '#EDEFEE',
+        borderWidth: 2,
+        borderRadius: 12
+    },
+    buttonText: {
+        color: '#333333',
+        textAlign: 'center',
+        fontSize: 32,
+    },
+    infoSection: {
+        fontSize: 24,
+        padding: 20,
+        marginVertical: 8,
+        color: '#EDEFEE',
+        textAlign: 'center',
+        backgroundColor: '#495E57',
+    },
 })

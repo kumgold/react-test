@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import {ScrollView, StyleSheet, Text, TextInput, View} from "react-native";
+import {ScrollView, StyleSheet, Text, TextInput, KeyboardAvoidingView, Platform} from "react-native";
 
 const FeedbackForm = () => {
     const [firstName, onChangeFirstName] = useState('');
@@ -8,31 +8,40 @@ const FeedbackForm = () => {
     const [message, onChangeMessage] = useState('');
 
     return (
-        <ScrollView style={styles.container}>
-            <Text style={styles.headingSection}>
-                How was your visit to Little Lemon?
-            </Text>
-            <Text style={styles.infoSection}>
-                Little Lemon is a charming neighborhood bistro that serves simple food
-                and classic cocktails in a lively but casual environment. We would love
-                to hear your experience with us!
-            </Text>
-            <TextInput
-                style={styles.input}
-                value={firstName}
-                onChangeText={onChangeFirstName}
-            />
-            <TextInput
-                style={styles.input}
-                value={lastName}
-                onChangeText={onChangeLastName}
-            />
-            <TextInput
-                style={styles.messageInput}
-                value={message}
-                onChangeText={onChangeMessage}
-            />
-        </ScrollView>
+        <KeyboardAvoidingView
+            style={styles.container}
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <ScrollView keyboardDismissMode={'on-drag'}>
+                <Text style={styles.headingSection}>
+                    How was your visit to Little Lemon?
+                </Text>
+                <Text style={styles.infoSection}>
+                    Little Lemon is a charming neighborhood bistro that serves simple food
+                    and classic cocktails in a lively but casual environment. We would love
+                    to hear your experience with us!
+                </Text>
+                <TextInput
+                    style={styles.input}
+                    value={firstName}
+                    onChangeText={onChangeFirstName}
+                    placeholder={'First Name'}
+                />
+                <TextInput
+                    style={styles.input}
+                    value={lastName}
+                    onChangeText={onChangeLastName}
+                    placeholder={'Last Name'}
+                />
+                <TextInput
+                    style={styles.messageInput}
+                    value={message}
+                    onChangeText={onChangeMessage}
+                    placeholder={'Please leave feedback'}
+                    multiline={true}
+                    maxLength={250}
+                />
+            </ScrollView>
+        </KeyboardAvoidingView>
     );
 }
 
@@ -46,7 +55,7 @@ const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         fontSize: 16,
-        borderColor: 'EDEFEE',
+        borderColor: '#EDEFEE',
         backgroundColor: '#F4CE14',
     },
     messageInput: {

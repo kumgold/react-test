@@ -1,22 +1,18 @@
 import {StyleSheet, View} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
 
-import LittleLemonHeader from "@/app/components/LittleLemonHeader";
-import MenuItems from "@/app/components/MenuItems";
-import FeedbackForm from "@/app/components/FeedbackForm";
+import LoginScreen from "@/app/components/LoginScreen";
 
 export default function HomeScreen() {
   return (
-    <View style={styles.container}>
-        {/*<LittleLemonHeader/>*/}
-        {/*<MenuItems/>*/}
-        <FeedbackForm/>
-    </View>
+      <View style={styles.container}>
+          <LoginScreen/>
+      </View>
   );
 }
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
-        backgroundColor: '#495E57',
+        flex: 1
     },
 });

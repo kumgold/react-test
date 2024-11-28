@@ -150,7 +150,7 @@ export default MenuItems;
 
 const menuStyle = StyleSheet.create({
     container: {
-        flex: 0.8
+        flex: 1
     },
     backgroundImage: {
         flex: 1,

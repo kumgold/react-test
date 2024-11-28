@@ -14,7 +14,8 @@ import {
     View
 } from "react-native";
 
-const LoginScreen = () => {
+// @ts-ignore
+const LoginScreen = ({ navigation }) => {
     const colorScheme = useColorScheme();
 
     const [loginSuccess, setLoginSuccess] = useState(false);
@@ -65,7 +66,7 @@ const LoginScreen = () => {
                                     clearButtonMode={'always'}
                                 />
                                 <Pressable style={styles.button}
-                                           onPress={() => {setLoginSuccess(true)}}>
+                                           onPress={() => navigation.navigate('Menu')}>
                                     <Text style={styles.buttonText}>
                                         Login
                                     </Text>

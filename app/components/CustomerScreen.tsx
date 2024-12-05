@@ -21,20 +21,6 @@ const CustomerScreen = () => {
     const [customers, setCustomers] = useState([]);
 
     useEffect(() => {
-        // @ts-ignore
-        db.withTransactionAsync((tx) => {
-            tx.executeSql(
-                'create table if not exists customers (id integer primary key not null, uid text, name text);'
-            );
-            tx.executeSql('select * from customers', [], (_, {rows}) => {
-                const customers = rows._array.map((item) => ({
-                    uid: item.uid,
-                    name: item.name,
-                }));
-                setCustomers(customers);
-            });
-        });
-
         db.execSync(
             'create table if not exists customers (id integer primary key not null, uid text, name text)'
         )
@@ -46,7 +32,6 @@ const CustomerScreen = () => {
             name: item.name
         }));
         setCustomers(customers);
-
 
     }, []);
 

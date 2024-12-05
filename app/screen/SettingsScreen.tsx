@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import {useEffect, useState} from "react";
 
-import useUpdate from './useUpdate';
+import useUpdate from '../components/useUpdate';
 
 export default function SettingsScreen() {
     const [preferences, setPreferences] = useState({

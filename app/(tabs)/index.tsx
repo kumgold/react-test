@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 
-import LoginScreen from "@/app/components/LoginScreen";
+import LoginScreen from "@/app/screen/LoginScreen";
 
 export default function HomeScreen() {
   return (

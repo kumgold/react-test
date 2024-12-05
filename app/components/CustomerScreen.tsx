@@ -19,17 +19,14 @@ const db = SQLite.openDatabaseSync('little_lemon');
 const CustomerScreen = () => {
     const [userName, onChangeUserName] = useState('');
     const [customers, setCustomers] = useState([]);
-    const [dialog, setDialog] = useState({
-        customer: {},
-        isVisible: false,
-    });
 
     useEffect(() => {
+        // @ts-ignore
         db.withTransactionAsync((tx) => {
             tx.executeSql(
                 'create table if not exists customers (id integer primary key not null, uid text, name text);'
             );
-            tx.executeSql('select * from customers', [], (_, { rows }) => {
+            tx.executeSql('select * from customers', [], (_, {rows}) => {
                 const customers = rows._array.map((item) => ({
                     uid: item.uid,
                     name: item.name,
@@ -37,6 +34,20 @@ const CustomerScreen = () => {
                 setCustomers(customers);
             });
         });
+
+        db.execSync(
+            'create table if not exists customers (id integer primary key not null, uid text, name text)'
+        )
+
+        const customers = db.getAllSync('select * from customers')
+        console.log('customers', customers);
+        customers.map((item) => ({
+            uid: item.uid,
+            name: item.name
+        }));
+        setCustomers(customers);
+
+
     }, []);
 
     return <KeyboardAvoidingView
@@ -59,12 +70,18 @@ const CustomerScreen = () => {
                         name: userName,
                     };
                     setCustomers([...customers, newValue]);
-                    db.withTransactionAsync((tx) => {
-                        tx.executeSql(
-                            'insert into customers (uid, name) values(?, ?)',
-                            [newValue.uid, newValue.name]
-                        );
-                    });
+
+                    db.runSync(
+                        'insert into customers (uid, name) values(?, ?)',
+                        [newValue.uid, newValue.name]
+                    )
+                    const c = db.getAllSync('select * from customers')
+                    c.map((item) => ({
+                        uid: item.uid,
+                        name: item.name
+                    }));
+                    console.log('customers', 'result = ' + c);
+
                     onChangeUserName('');
                 }}
                 style={styles.buttonStyle}>
